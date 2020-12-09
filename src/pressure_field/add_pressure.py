@@ -3,7 +3,6 @@ import argparse
 
 from opencmiss.zinc.context import Context
 from opencmiss.zinc.field import Field
-from opencmiss.zinc.node import Node
 from opencmiss.utils.zinc.field import create_field_finite_element
 
 
@@ -26,15 +25,15 @@ def add_field(field_module, field_name, field_value):
 
     del cache
 
-    # cache = field_module.createFieldcache()
-    # mesh = field_module.findMeshByDimension(2)
-    # element_iter = mesh.createElementiterator()
-    # element = element_iter.next()
-    #
-    # while element.isValid():
-    #     merge_fields_with_elements(field_module, mesh, element, field_name)
-    #     cache.setElement(element)
-    #     element = element_iter.next()
+    cache = field_module.createFieldcache()
+    mesh = field_module.findMeshByDimension(2)
+    element_iter = mesh.createElementiterator()
+    element = element_iter.next()
+
+    while element.isValid():
+        merge_fields_with_elements(field_module, mesh, element, field_name)
+        cache.setElement(element)
+        element = element_iter.next()
 
     field_module.endChange()
 
