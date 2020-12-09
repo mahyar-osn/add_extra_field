@@ -13,26 +13,20 @@ class ProgramArguments(object):
 def add_field(field_module, field_name, field_value):
     field_module.beginChange()
 
-    cache = field_module.createFieldcache()
     node_set = field_module.findNodesetByFieldDomainType(Field.DOMAIN_TYPE_NODES)
     node_iter = node_set.createNodeiterator()
     node = node_iter.next()
 
     while node.isValid():
         merge_fields_with_nodes(field_module, node, field_name, field_value, node_set)
-        cache.setNode(node)
         node = node_iter.next()
 
-    del cache
-
-    cache = field_module.createFieldcache()
     mesh = field_module.findMeshByDimension(2)
     element_iter = mesh.createElementiterator()
     element = element_iter.next()
 
     while element.isValid():
         merge_fields_with_elements(field_module, mesh, element, field_name)
-        cache.setElement(element)
         element = element_iter.next()
 
     field_module.endChange()
